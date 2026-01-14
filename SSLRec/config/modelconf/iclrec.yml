@@ -1,0 +1,43 @@
+optimizer:
+  name: adam
+  lr: 1.0e-3
+  weight_decay: 0
+
+train:
+  epoch: 90
+  batch_size: 512
+  save_model: true
+  log_loss: False
+  test_step: 1
+  reproducible: true
+  seed: 2023
+  trainer: iclrec_trainer
+
+test:
+  metrics: [recall, ndcg]
+  k: [5, 10, 20]
+  batch_size: 512
+
+data:
+  type: sequential
+  name: ml-20m
+  seq_aug: true
+  neg_samp: true
+
+model:
+  name: iclrec
+  dropout_rate: 0.1
+  n_layers: 2
+  embedding_size: 64
+  n_heads: 2
+  max_seq_len: 50
+  cl_weight: 0.1
+  intent_cl_weight: 1.0
+  tau: 1
+  num_intent_clusters: 256
+
+tune:
+  enable: false
+  hyperparameters: []
+  layer_num: []
+  reg_weight: []

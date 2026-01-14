@@ -1,0 +1,44 @@
+optimizer:
+  name: adam
+  lr: 1.0e-4
+  weight_decay: 0
+
+train:
+  epoch: 15
+  batch_size: 4096
+  save_model: true
+  loss: pairwise
+  log_loss: false
+  test_step: 1
+  reproducible: ture
+  seed: 2023
+
+test:
+  metrics: [recall, ndcg]
+  k: [10, 20, 40]
+  batch_size: 1024
+
+data:
+  type: multi_behavior
+  name: retail_rocket
+
+model:
+  name: smbrec
+  keep_rate: 0.5
+  layer_num: 2
+  reg_weight: 1.0e-2
+  cl_weight: 0.1
+  embedding_size: 32
+  target: buy
+  dropout: 0.2
+  sample_num_pos: 5
+  sample_num_neg: 5
+  tau: 0.5
+
+tune:
+  enable: false
+  hyperparameters: [layer_num, reg_weight]
+  layer_num: [2, 3]
+  reg_weight: [1.0e-1, 1.0e-2, 1.0e-3]
+
+

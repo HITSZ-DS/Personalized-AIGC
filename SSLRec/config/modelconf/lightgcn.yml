@@ -1,0 +1,39 @@
+optimizer:
+  name: adam
+  lr: 1.0e-3 # not 1e-3
+  weight_decay: 0
+
+train:
+  epoch: 500
+  batch_size: 4096
+  save_model: true
+  loss: pairwise # bpr
+  log_loss: false # whether to log loss
+  test_step: 3 # evaluate per {test_step} epochs
+  patience: 5
+  reproducible: true
+  seed: 2023
+  pretrain_path: checkpoint/lightgcn/lightgcn-bilibili-1761138974.pth
+
+test:
+  metrics: [recall, ndcg] # choose in {ndcg, recall, precision, mrr}
+  k: [10, 20, 40] # top-k
+  batch_size: 1024 # How many users per batch during validation
+
+data:
+  type: general_cf # choose in {general_cf, multi_behavior, sequential, social}
+  name: bilibili
+
+
+model:
+  name: lightgcn # case-insensitive
+  keep_rate: 0.5
+  layer_num: 2
+  reg_weight: 1.0e-8
+  embedding_size: 32
+
+tune:
+  enable: false # Whether to enable grid search to search for optimal hyperparameters
+  hyperparameters: [layer_num, reg_weight] # The name of the hyperparameter
+  layer_num: [2, 3] # Use a list to store the search range
+  reg_weight: [1.0e-6, 1.0e-7, 1.0e-8]

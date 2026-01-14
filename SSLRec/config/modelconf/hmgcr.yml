@@ -1,0 +1,53 @@
+optimizer:
+  name: adam
+  lr: 1.0e-2
+  weight_decay: 0
+
+train:
+  epoch: 100
+  batch_size: 4096
+  save_model: true
+  loss: pairwise
+  log_loss: false
+  test_step: 1
+  reproducible: ture
+  seed: 2023
+
+test:
+  metrics: [recall, ndcg]
+  k: [10, 20, 40]
+  batch_size: 1024
+
+data:
+  type: multi_behavior
+  name: retail_rocket
+
+model:
+  name: hmgcr
+  keep_rate: 0.5
+  layer_num: 3
+  reg_weight: 1.0e-2
+  embedding_size: 32
+  min_num_buy: 5
+  max_num_buy: 100
+  train_negative_samples: 5
+  graph_encoder: GCN
+  fusion: MLP
+  trigger: 30
+  hidden_dim: 16
+  gat_layers_num: 3
+  dropout: 0.2
+  heads_num: 3
+  wd: 1.e-6
+  t: 0.01
+  beta: 0.5
+  target: buy
+  tau: 0.5
+  beta_loss: 0.9
+
+tune:
+  enable: false
+  hyperparameters: [layer_num, lr, reg_weight]
+  layer_num: [2, 3, 4]
+  lr: [ 0.0001, 0.001, 0.01, 0.1, 0.03, 0.005, 0.007 ]
+  reg_weight: [1.0e-1, 1.0e-2, 1.0e-3]

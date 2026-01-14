@@ -1,0 +1,61 @@
+optimizer:
+  name: adam
+  lr: 3.0e-3
+  weight_decay: 0
+  opt_base_lr: 1.e-3
+  opt_max_lr: 3.e-3
+  opt_weight_decay: 1.e-4
+  meta_opt_base_lr: 1.e-4
+  meta_opt_max_lr: 1.e-3
+  meta_opt_weight_decay: 1.e-4
+  meta_lr: 1.e-3
+  decay: 0.96
+
+train:
+  epoch: 95
+  batch_size: 4096
+  save_model: true
+  loss: pairwise
+  test_step: 1
+  seed: 2023
+  reproducible: true
+  sampNum: 10
+  meta_batch: 128
+  SSL_batch: 30
+  reg: 1.0e-3
+  beta: 0.005
+  patience: 100
+  trainer: cml_trainer
+
+test:
+  metrics: [recall, ndcg]
+  k: [10, 20, 40]
+  batch_size: 1024
+
+data:
+  type: multi_behavior
+  name: retail_rocket
+
+model:
+  name: cml
+  keep_rate: 0.5
+  layer_num: 2
+  reg_weight: 1.0e-2
+  embedding_size: 32
+  hidden_dim: 16
+  gnn_layer: 3
+  drop_rate: 0.8
+  drop_rate1: 0.5
+  slope: 0.1
+  target: 'buy'
+  head_num: 4
+  inner_product_mult: 1
+
+tune:
+  enable: false
+  hyperparameters: [layer_num, reg_weight, embedding_size]
+  layer_num: [2, 3, 4]
+  reg_weight: [1.0e-1, 1.0e-2, 1.0e-3]
+  embedding_size: [16, 32, 64]
+
+

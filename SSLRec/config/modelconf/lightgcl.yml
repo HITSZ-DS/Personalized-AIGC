@@ -1,0 +1,39 @@
+optimizer:
+  name: adam
+  lr: 2.0e-3
+  weight_decay: 0
+
+train:
+  epoch: 300
+  batch_size: 4096
+  save_model: false
+  loss: pairwise
+  log_loss: false
+  test_step: 3
+  patience: 5
+  reproducible: true
+  seed: 2023
+
+test:
+  metrics: [recall, ndcg]
+  k: [10, 20, 40]
+  batch_size: 1024
+
+data:
+  type: general_cf
+  name: gowalla
+
+model:
+  name: lightgcl
+  dropout: 0
+  layer_num: 2
+  cl_weight: 0.1
+  reg_weight: 1.0e-9
+  temp: 0.1
+  embedding_size: 32
+  svd_q: 5
+
+tune:
+  enable: false
+  hyperparameters: []
+  dropout: []

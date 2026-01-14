@@ -1,0 +1,71 @@
+optimizer:
+  name: adam
+  lr: 4.0e-3
+  weight_decay: 1.e-4
+  opt_base_lr: 1.e-3
+  opt_max_lr: 2.e-3
+  opt_weight_decay: 1.e-4
+  meta_opt_base_lr: 1.e-4
+  meta_opt_max_lr: 1.e-3
+  meta_opt_weight_decay: 1.e-4
+  meta_lr: 1.e-3
+  decay: 0.96
+
+train:
+  epoch: 15
+  batch_size: 256
+  save_model: false
+  loss: pairwise
+  test_step: 1
+  reproducible: true
+  seed: 2023
+  sampNum: 10
+  meta_batch: 128
+  SSL_batch: 30
+  reg: 1.e-2
+  beta: 0.005
+  importance: 1
+  trainer: mbgmn_trainer
+
+test:
+  metrics: [recall, ndcg]
+  k: [10, 20, 40]
+  batch_size: 1024
+
+data:
+  type: multi_behavior
+  name: retail_rocket
+
+model:
+  name: mbgmn
+  keep_rate: 0.5
+  layer_num: 2
+  reg_weight: 1.0e-2
+  embedding_size: 32
+  gnn_layer: 
+  drop_rate: 0.8
+  drop_rate1: 0.5
+  slope: 0.1
+  target: 'buy'
+  head_num: 4
+  inner_product_mult: 1
+  rank: 4
+  memosize: 2
+  sampNum: 40
+  att_head: 2
+  trnNum: 100
+  deep_layer: 0
+  mult: 100
+  keepRate: 0.7
+  slot: 5
+  graphSampleN: 15000
+  divSize: 10000
+  subUsrSize: 10
+  subUsrDcy: 0.9
+
+tune:
+  enable: false
+  hyperparameters: [layer_num, reg_weight]
+  layer_num: [2, 3, 4]
+  reg_weight: [1.0e-1, 1.0e-2, 1.0e-3]
+

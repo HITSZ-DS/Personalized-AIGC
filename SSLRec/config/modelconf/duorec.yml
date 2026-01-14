@@ -1,0 +1,39 @@
+optimizer:
+  name: adam
+  lr: 1.0e-3 # not 1e-3
+  weight_decay: 0
+
+train:
+  epoch: 100
+  batch_size: 512
+  save_model: true
+  log_loss: false
+  test_step: 1
+  reproducible: true
+  seed: 2023
+
+test:
+  metrics: [recall, ndcg]
+  k: [5, 10, 20]
+  batch_size: 512
+
+data:
+  type: sequential
+  name: ml-20m
+  seq_aug: true
+
+model:
+  name: duorec
+  dropout_rate: 0.1
+  n_layers: 2
+  embedding_size: 64
+  n_heads: 2
+  max_seq_len: 50
+  lmd_sem: 0.1
+  tau: 1
+
+tune:
+  enable: false
+  hyperparameters: [lmd_sem, tau]
+  lmd_sem: [0.1, 0.05, 0.01]
+  tau: [1, 0.8, 0.6]

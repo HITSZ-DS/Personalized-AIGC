@@ -1,0 +1,36 @@
+optimizer:
+  name: adam
+  lr: 1.0e-3
+  weight_decay: 1.0e-6
+
+train:
+  epoch: 300
+  batch_size: 4096
+  save_model: false
+  loss: pairwise
+  log_loss: false
+  test_step: 3
+  patience: 5
+  reproducible: true
+  seed: 2023
+
+test:
+  metrics: [recall, ndcg]
+  k: [10, 20, 40]
+  batch_size: 1024
+
+data:
+  type: general_cf
+  name: gowalla
+
+model:
+  name: directau
+  layer_num: 2
+  gamma: 2.0
+  embedding_size: 32
+
+tune:
+  enable: false
+  hyperparameters: [layer_num, gamma]
+  layer_num: [2, 3]
+  gamma: [0.5, 1, 1.5, 2, 2.5]

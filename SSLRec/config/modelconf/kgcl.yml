@@ -1,0 +1,47 @@
+optimizer:
+  name: adam
+  lr: 1.0e-3 # not 1e-3
+  weight_decay: 0
+
+train:
+  trainer: kgcl_trainer
+  epoch: 500
+  batch_size: 1024
+  kg_batch_size: 4096
+  save_model: true
+  loss: pairwise # bpr
+  test_step: 1 # evaluate per {test_step} epochs
+  #pretrain_path: ./checkpoint/xxxx.pth
+  reproducible: true
+  seed: 2020
+
+test:
+  metrics: [recall, ndcg] # choose in {ndcg, recall, precision, mrr}
+  k: [10, 20, 40] # top-k
+  batch_size: 1024 # How many users per batch during validation
+  eval_at_one_forward: true
+
+data:
+  type: kg # choose in {general_cf, multi_behavior, sequential, social, kg}
+  name: last-fm
+
+model:
+  name: kgcl # case-insensitive
+  train_trans: false
+  layer_num: 2
+  layer_num_kg: 2
+  decay_weight: 1.0e-5
+  embedding_size: 64
+  node_dropout: true
+  node_dropout_rate: 0.5
+  mess_dropout: true
+  mess_dropout_rate: 0.1
+
+  tau: 0.2
+  cl_weight: 0.1
+  mu: 0.7
+
+tune:
+  enable: false # Whether to enable grid search to search for optimal hyperparameters
+  hyperparameters: [layer_num] # The name of the hyperparameter
+  layer_num: [1, 2, 3] # Use a list to store the search range

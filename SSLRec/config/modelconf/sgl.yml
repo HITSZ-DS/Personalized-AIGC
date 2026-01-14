@@ -1,0 +1,42 @@
+optimizer:
+  name: adam
+  lr: 1.0e-3
+  weight_decay: 0
+
+train:
+  epoch: 300
+  batch_size: 4096
+  save_model: false
+  loss: pairwise
+  log_loss: false
+  test_step: 3
+  patience: 5
+  reproducible: true
+  seed: 2023
+
+test:
+  metrics: [recall, ndcg]
+  k: [10, 20, 40]
+  batch_size: 1024
+
+data:
+  type: general_cf
+  name: gowalla
+
+model:
+  name: sgl
+  keep_rate: 0.5
+  layer_num: 2
+  reg_weight: 1.0e-5
+  cl_weight: 1.0
+  temperature: 0.2
+  embedding_size: 32
+  augmentation: edge_drop
+
+tune:
+  enable: false
+  hyperparameters: [layer_num, reg_weight, cl_weight, temperature]
+  layer_num: [2, 3]
+  reg_weight: [1.0e-4, 1.0e-5, 1.0e-6]
+  cl_weight: [1.0, 1.0e-1, 1.0e-2]
+  temperature: [0.1, 0.2, 0.5]
