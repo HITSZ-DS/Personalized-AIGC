@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="./assets/logo.png" width="400">
+  <img src="./assets/logo.png">
   <br>
   <br>
   <h1 align="center">🎨 TailorRec: From User Behavior to Creative Content</h1>
